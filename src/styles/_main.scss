@@ -1,0 +1,110 @@
+p {
+    line-height: 1.7;
+}
+
+ul {
+    list-style: none;
+}
+
+.login-page {
+    padding-top: 90px;
+}
+
+.info-sistema {
+    height: 100px;
+    margin-bottom: 20px;
+    text-align: center;
+
+    .logo {
+        height: 100%;
+    }
+
+    legend {
+        margin-bottom: 30px;
+    }
+}
+
+form {
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    padding: 40px;
+}
+
+.btn-cadastrar {
+    border: 1px solid #cccccc;
+    width: 10%;
+    white-space: normal;
+}
+
+.cadastro {
+    text-align: center;
+}
+.btn-form {
+    margin: 40px 0 0;
+    text-align: center;
+}
+
+.btn-adicionar {
+    margin: 60px 1 2;
+    text-align: left;
+    color: #195128;
+    border-color: #195128;
+}
+
+
+.container-bem-vindo {
+    .container-titulo {
+        margin-bottom: 30px;
+    }
+    .lista-links {
+        .lista-item {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.nav-tabs {
+    .nav-item {
+        .nav-link {
+            &:hover, &:focus, &:active {
+                background-color: #28a745;
+            }
+        }
+    }
+}
+
+$page-header-color: #195128;
+        
+.breadcrumb{
+    margin: 10px 2 2;
+    background-color: #fff;
+    border-color: #195128;
+    .breadcrumb-item{
+        color: #195128;
+    }
+}
+
+a:hover {
+    color: #195128;
+    text-decoration: underline;
+}
+
+a {color: #195128}
+
+.btn-primary{
+    text-align: left;
+}
+
+table th, table td{
+    border-top: none;
+}
+
+table thead {
+    background-color: #b1caa9;
+    color: black;
+}
+
+Table {
+    Border: 1px solid #d8e4d3;
+   }
+

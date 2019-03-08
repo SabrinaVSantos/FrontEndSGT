@@ -1,0 +1,11 @@
+<form [formGroup]="formulario">
+    <h3 class="text-center">CADASTRAR</h3>
+    <div class="form-group">
+        Nome*: <input type="text" class="form-control input-underline input-lg" formControlName="nome" 
+        id="nome" placeholder="Nome">
+    </div>
+    <div class="btn-form">
+        <button type="submit" class="btn cadastrar" (click)="onCadastrar()"> Salvar </button> &nbsp;&nbsp;
+        <a class="btn btn-secondary" [routerLink]="['/instituicoes/listar']"> Cancelar </a>
+   </div>
+</form>

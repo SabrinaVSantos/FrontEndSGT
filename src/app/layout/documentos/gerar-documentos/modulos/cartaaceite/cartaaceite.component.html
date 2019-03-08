@@ -1,0 +1,35 @@
+<div class="col-md-6">
+    <h2 class="text-center"> Adicionar usuário </h2>
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        
+            <div class="form-group">
+                <input type="text" class="form-control input-underline input-lg" id="" placeholder="Nome">
+            </div>
+  
+            <div class="form-group">
+                <input type="text" class="form-control input-underline input-lg" id="" placeholder="email">
+            </div>
+  
+            <div class="form-group">
+                <input type="text" class="form-control input-underline input-lg" id="" placeholder="Matricula">
+            </div>
+  
+            <div class="form-group">
+                <input type="text" class="form-control input-underline input-lg" id="" placeholder="Periodo">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control input-underline input-lg" name="Senha" 
+                        placeholder="Senha" (keydown.enter)="onLoggedin()">
+                   <!--<app-validator [field]="formulario.controls.senha"></app-validator>--> 
+            </div>
+            <div class="form-group">
+                  <input type="text" class="form-control input-underline input-lg" id="" placeholder="Perfil">
+              </div>
+  
+      <button type="submit" class="btn btn btn-success"> Cadastrar </button>
+      <div class="btn-form">
+          <a class="btn btn btn-success" [routerLink]="['/dashboard']" (click)="onLoggedin()"> Voltar </a>
+     </div>
+  
+    </form>
+  </div>

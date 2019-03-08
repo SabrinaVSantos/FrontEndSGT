@@ -1,0 +1,63 @@
+<form [formGroup]="formulario">
+    <h3 class="text-center">Cadastrar</h3>
+    <div class="form-group">
+        Tema*: <input type="text" formControlName="tema" class="form-control input-underline input-lg" 
+        id="tema" placeholder="Tema">
+    </div>
+    <div class="form-group">
+        Aluno*: <select formControlName="idAluno1" ng-model="name" 
+        class="form-control select-underline input-lg" id="aluno1" placeholder="Aluno">
+            <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                {{aluno.nome}}
+            </option>
+        </select>  
+    </div>
+    <div class="form-group">
+        Aluno em dupla: <select formControlName="idAluno2" ng-model="name" 
+        class="form-control select-underline input-lg" id="aluno2" placeholder="Aluno em dupla">
+            <option value=""> </option>
+            <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                {{aluno.nome}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        Orientador*: <select formControlName="idOrientador" ng-model="name" 
+        class="form-control select-underline input-lg" id="orientador" placeholder="Orientador">
+            <option *ngFor="let professor of professores" [value]="professor.id">
+                {{professor.nome}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        Co-orientador: <select formControlName="idCoOrientador" ng-model="name" 
+        class="form-control select-underline input-lg" id="coOrientador" placeholder="coOrientador">
+            <option value=""> </option>
+            <option *ngFor="let professor of professores" [value]="professor.id">
+                {{professor.nome}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group" *ngIf="!service.isAluno()">
+        Avaliador 1: <select formControlName="idAvaliador1" ng-model="name" 
+        class="form-control select-underline input-lg" id="idAvaliador1" placeholder="Avaliador 1">
+            <option value=""> </option>
+            <option *ngFor="let professor of professores" [value]="professor.id">
+                {{professor.nome}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group" *ngIf="!service.isAluno()">
+        Avaliador 2: <select formControlName="idAvaliador2" ng-model="name" 
+        class="form-control select-underline input-lg" id="idAvaliador2" placeholder="Avaliador 2">
+            <option value=""> </option>
+            <option *ngFor="let professor of professores" [value]="professor.id">
+                {{professor.nome}}
+            </option>
+        </select>
+    </div>
+    <div class="btn-form">
+        <button type="submit" class="btn btn-success" (click)="onCadastrar()"> Cadastrar </button>&nbsp;&nbsp;
+        <a class="btn btn-secondary" [routerLink]="['/preprojeto/listar']"> Cancelar </a>
+    </div>
+</form>

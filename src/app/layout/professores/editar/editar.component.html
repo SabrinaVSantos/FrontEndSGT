@@ -1,0 +1,58 @@
+<form [formGroup]="formulario">
+    <div id="loading" style="text-align: center">
+        <img id="loading-image" src="/assets/images/ajax-loader.gif" alt="Loading..." />
+    </div>
+    <h3 class="text-center">Editar</h3>
+    <div class="form-group">
+        Nome*: <input type="text" formControlName="nome" ng-model="name" 
+        class="form-control input-underline input-lg" id="nome" placeholder="Nome">
+    </div>
+    <div class="form-group">
+        E-mail*: <input type="text" formControlName="email" ng-model="name" 
+        class="form-control input-underline input-lg" id="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+        Siape*: <input type="number" formControlName="siape" ng-model="name" 
+        class="form-control input-underline input-lg" id="siape" placeholder="Siape" readonly="true">
+    </div>
+    <div class="form-group">
+        Lattes*: <input type="text" formControlName="lattes" ng-model="name" 
+        class="form-control input-underline input-lg" id="lattes" placeholder="Lattes">
+    </div>
+    <div class="form-group">
+        Área de Pesquisa*: <input type="text" formControlName="areaPesquisa" ng-model="name" 
+        class="form-control input-underline input-lg" id="areaPesquisa" placeholder="Area de Pesquisa">
+    </div>
+    <div class="form-group">
+        Titulação*: <input type="text" formControlName="escolaridade" ng-model="name" 
+        class="form-control input-underline input-lg" id="escolaridade" placeholder="Titulação">
+    </div>
+    <div class="form-group">
+        NDE*: <select formControlName="nde" id="nde" class="form-control select-underline input-lg">
+            <option value="true">SIM</option>
+            <option value="false">NÃO</option>
+        </select>
+    </div>
+    <div class="form-group" *ngIf="service.isCoordenador()">
+        Perfil*: <select formControlName="perfil" id="perfil" class="form-control select-underline input-lg">
+            <option value="PROFESSOR">Professor</option>
+            <option value="COORDENADOR">Coordenador</option>
+        </select>
+    </div>
+    <div class="form-group">
+        Instituição*: <select formControlName="idInstituicao" ng-model="instituicao" 
+        class="form-control select-underline input-lg" id="idInstituicao" placeholder="Instituição">
+            <option *ngFor="let instituicao of instituicoes" [value]="instituicao.id">
+                {{instituicao.nome}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        Senha*: <input type="password" formControlName="senha" ng-model="name" 
+        class="form-control input-underline input-lg" id="senha" placeholder="Senha">
+    </div>
+    <div class="btn-form">
+        <button type="submit" class="btn btn-success" (click)="onCadastrar()"> Atualizar </button>&nbsp;&nbsp;
+        <a class="btn btn-secondary" [routerLink]="['/professores/listar']"> Cancelar </a>
+    </div> 
+</form>

@@ -1,0 +1,61 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+
+    <div class="list-group">
+            &nbsp;
+        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-home"></i>
+            <span>{{ ' INÍCIO' | translate }}</span>
+        </a>
+        <a [routerLink]="['/alunos/listar']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-user-graduate"></i>
+            <span>{{ ' ALUNOS' | translate }}</span> 
+        </a> 
+        <a [routerLink]="['/professores/listar']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-chalkboard-teacher"></i> 
+            <span>{{ ' ORIENTADORES' | translate }}</span>
+        </a>
+        <a [routerLink]="['/preprojeto/listar']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-file-alt"></i>
+            <span>{{ ' PRÉ-PROJETOS' | translate }}</span>
+        </a>
+        <a [routerLink]="['/tcc/acompanhar']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-file-alt"></i>
+            <span>{{ ' TCC' | translate }}</span>
+        </a>
+        <a [routerLink]="['/instituicoes/listar']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-school"></i>
+            <span>{{ ' INSTITUIÇÕES' | translate }}</span>
+        </a>
+        
+    
+        <div class="header-fields">
+          
+            
+                <div class="nested-menu">
+                    <a class="list-group-item" (click)="addExpandClass('profile')">
+                        <span><i class="fa fa-user"></i>Sabrina Vieira</span>
+                    </a>
+                    <li class="nested" [class.expand]="showMenu === 'profile'">
+                        <ul class="submenu">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <span><i class="fa fa-fw fa-user"></i> {{ 'Perfil' | translate }}</span>
+                                </a>
+                            </li>
+                
+                            <li>
+                                <a [routerLink]="['/login']" (click)="onLoggedout()">
+                                    <span><i class="fa fa-fw fa-power-off"></i> {{ 'Sair' | translate }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
+            </div>
+        </div>
+
+    <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
+        <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
+        <span>{{ 'Esconder Menu' | translate }}</span>
+    </div>
+</nav>

@@ -1,0 +1,60 @@
+<div class="login-page" [@routerTransition]>
+  <div class="row justify-content-md-center">
+      <div class="col-md-10">
+            <form [formGroup]="formulario">
+                <div class="info-sistema">  
+                    <legend>CADASTRO DE PROFESSOR</legend> 
+                </div>
+              <div class="form-content">
+                  <div class="form-group">
+                      <input type="text" formControlName="nome" ng-model="name" class="form-control input-underline input-lg"  placeholder="Nome">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" formControlName="email" ng-model="name" class="form-control input-underline input-lg"  placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                    <input type="number" min="0000001" max="9999999" formControlName="siape" ng-model="name" class="form-control input-underline input-lg"  placeholder="Siape">
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="lattes" ng-model="name" class="form-control input-underline input-lg"  placeholder="Lattes">
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="areaPesquisa" ng-model="name" class="form-control input-underline input-lg"  placeholder="Area de Pesquisa">
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="escolaridade" ng-model="name" class="form-control input-underline input-lg"  placeholder="Escolaridade">
+                </div>
+
+                <div class="form-group">
+                    <label>NDE</label>
+                    <select formControlName="nde" id="nde" class="form-control select-underline input-lg">
+                        <option value="true">SIM</option>
+                        <option value="false">NÃO</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    Instituição*: <select formControlName="idInstituicao" ng-model="instituicao" 
+                    class="form-control select-underline input-lg" id="idInstituicao" placeholder="Instituição">
+                        <option *ngFor="let instituicao of instituicoes" [value]="instituicao.id">
+                            {{instituicao.nome}}
+                        </option>
+                    </select>
+                </div>
+                
+
+                  <div class="form-group">
+                      <input type="password" formControlName="senha" ng-model="name" class="form-control input-underline input-lg"  placeholder="Senha">
+                  </div>
+                  <div class="form-group">
+                      <input type="password" formControlName="senha2" ng-model="name" class="form-control input-underline input-lg"  placeholder="Repetir Senha">
+                  </div>
+              </div>
+              <div class="btn-form">
+                <a class="btn btn-primary" (click)="onCadastrar()"> Registrar </a>&nbsp;
+                <a class="btn btn-secondary" [routerLink]="['/login']"> Cancelar </a>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+

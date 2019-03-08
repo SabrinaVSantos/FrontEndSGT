@@ -1,0 +1,33 @@
+<form [formGroup]="formulario">
+    <h3 class="text-center">Cadastrar</h3>
+    <div class="form-group">
+        Nome*: <input type="text" class="form-control input-underline input-lg" formControlName="nome" 
+        id="nome" placeholder="Nome">
+    </div>
+
+    <div class="form-group">
+        E-mail*: <input type="text" class="form-control input-underline input-lg" formControlName="email" 
+        id="email" placeholder="email">
+    </div>
+
+    <div class="form-group">
+        Matrícula*: <input type="number" min="00000000000001" max="99999999999999" class="form-control input-underline input-lg" formControlName="matricula" 
+        id="matricula" placeholder="Matricula">
+    </div>
+    <div class="form-group">
+        Período*: <input type="number" class="form-control input-underline input-lg" formControlName="periodo" 
+        id="periodo" placeholder="Periodo">
+    </div>
+    <div class="form-group">
+        Senha*: <input type="password" class="form-control input-underline input-lg" formControlName="senha" 
+            name="senha" placeholder="Senha">
+    </div>
+    <div class="form-group">
+        Repetir senha*: <input type="password" formControlName="senha2" name="senha2" (keydown.enter)="onCadastrar()" 
+        class="form-control input-underline input-lg" placeholder="Repetir Senha">
+    </div>
+    <div class="btn-form">
+        <button type="submit" class="btn btn-success" (click)="onCadastrar()"> Salvar </button> &nbsp;&nbsp;
+        <a class="btn btn-secondary" [routerLink]="['/alunos/listar']"> Cancelar </a>
+   </div>
+</form>

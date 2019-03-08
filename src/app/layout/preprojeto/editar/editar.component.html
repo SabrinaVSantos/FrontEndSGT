@@ -1,0 +1,400 @@
+<ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" id="navtab1" (click)="trocaDiv('nav', 1)">
+                DADOS GERAIS
+            </a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link" id="navtab2" (click)="trocaDiv('nav', 2)">
+                DOCUMENTOS
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="navtab3" (click)="trocaDiv('nav', 3)">
+                AVALIAÇÃO
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="navtab4" (click)="trocaDiv('nav', 4)">
+                GERAR DOCUMENTOS
+            </a>
+        </li>
+    </ul>
+    
+<div id="nav1">
+    <form [formGroup]="formulario">
+        <h3 class="text-center"> Dados Gerais </h3>
+        <div class="form-group">
+            Tema*: <input type="text" formControlName="tema" class="form-control input-underline input-lg" 
+            id="tema" placeholder="Tema">
+        </div>
+        <div class="form-group">
+            Aluno*: <select formControlName="idAluno1" ng-model="name" 
+            class="form-control select-underline input-lg" id="aluno1" placeholder="Aluno">
+                <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                    {{aluno.nome}}
+                </option>
+            </select>  
+        </div>
+        <div class="form-group">
+            Aluno em dupla: <select formControlName="idAluno2" ng-model="name" 
+            class="form-control select-underline input-lg" id="aluno2" placeholder="Aluno em dupla">
+                <option value=""> </option>
+                <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                    {{aluno.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            Orientador*: <select formControlName="idOrientador" ng-model="name" 
+            class="form-control select-underline input-lg" id="orientador" placeholder="Orientador">
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            Co-orientador: <select formControlName="idCoOrientador" ng-model="name" 
+            class="form-control select-underline input-lg" id="coOrientador" placeholder="coOrientador">
+                <option value=""> </option>
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group" *ngIf="!service.isAluno()">
+            Avaliador 1: <select formControlName="idAvaliador1" ng-model="name" 
+            class="form-control select-underline input-lg" id="idAvaliador1" placeholder="Avaliador 1">
+                <option value=""> </option>
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group" *ngIf="!service.isAluno()">
+            Avaliador 2: <select formControlName="idAvaliador2" ng-model="name" 
+            class="form-control select-underline input-lg" id="idAvaliador2" placeholder="Avaliador 2">
+                <option value=""> </option>
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="btn-form">
+            <button type="submit" class="btn btn-success" (click)="onCadastrar()"> Atualizar </button>&nbsp;&nbsp;
+            <a class="btn btn-secondary" [routerLink]="['/preprojeto/listar']"> Cancelar </a>
+        </div>
+    </form>
+</div>
+
+<div style="display: none;" id="nav2">
+    <form [formGroup]="formulario">
+        <h3 class="text-center"> Documentos </h3>
+        <div class="form-group">
+            <table class="table table-striped">
+                    <thead>
+                    <tr>
+                    <th colspan="2">Documentos</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                <tr>
+                <td>Pré-projeto</td>
+                <td>
+                    {{this.preProjeto.arquivoPreProjeto == null? 'não enviado':''}}
+                    <button *ngIf="this.preProjeto.arquivoPreProjeto != null" class="btn btn-primary" (click)="download(this.preProjeto.arquivoPreProjeto)">Download</button>
+                </td>
+                </tr>
+                <tr>
+                <td>Ficha de inscrição</td>
+                <td>
+                    {{this.preProjeto.arquivoFichaInscricao == null? 'não enviado':''}}
+                    <button *ngIf="this.preProjeto.arquivoFichaInscricao != null" class="btn btn-primary" (click)="download(this.preProjeto.arquivoFichaInscricao)">Download</button>
+                </td>
+                </tr>
+                <tr>
+                <td>Histórico escolar</td>
+                <td>
+                    {{this.preProjeto.arquivoHistorico == null? 'não enviado':''}}
+                    <button *ngIf="this.preProjeto.arquivoHistorico != null" class="btn btn-primary" (click)="download(this.preProjeto.arquivoHistorico)">Download</button>
+                </td>
+                </tr>
+                <tr>
+                <td>Carta de aceite</td>
+                <td>
+                    {{this.preProjeto.arquivoCartaAceite == null? 'não enviado':''}}
+                    <button *ngIf="this.preProjeto.arquivoCartaAceite != null" class="btn btn-primary" (click)="download(this.preProjeto.arquivoCartaAceite)">Download</button>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-form">
+            <a class="btn btn-success" [routerLink]="['/preprojeto/upload', this.id]"> Enviar Documentos </a>
+        </div>
+    </form>
+</div>
+
+<div style="display: none;" id="nav3">
+    <form [formGroup]="formulario">
+        <h3 class="text-center"> Avaliação </h3>
+        <div class="form-group">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                <th>Avaliador</th>
+                <th>Nota</th>
+                <th>Observação</th>
+                <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>{{this.preProjeto.avaliador1 == null ? "-": this.preProjeto.avaliador1.nome}}</td>
+                <td>{{this.preProjeto.nota1 == null ? "-": this.preProjeto.nota1}}</td>
+                <td>{{this.preProjeto.observacao1 == null ? "-": this.preProjeto.observacao1}}</td>
+                <td>
+                    <a *ngIf="service.isPodeAvaliarPreProjeto(preProjeto.idAvaliador1, preProjeto)" class="btn btn-primary" [routerLink]="['/preprojeto/avaliacao', this.id, this.preProjeto.avaliador1.id, 'nav1']"> Avaliar </a>&nbsp;&nbsp;
+                    <a *ngIf="service.isPodeAvaliarPreProjeto(preProjeto.idAvaliador1, preProjeto)" class="btn btn-success" [routerLink]="['/preprojeto/avaliacao', this.id, this.preProjeto.avaliador1.id, 'nav4']"> Ficha de avaliação individual </a>
+                </td>
+                </tr>
+                <tr>
+                <td>{{this.preProjeto.avaliador2 == null ? "-": this.preProjeto.avaliador2.nome}}</td>
+                <td>{{this.preProjeto.nota2 == null ? "-": this.preProjeto.nota2}}</td>
+                <td>{{this.preProjeto.observacao2 == null ? "-": this.preProjeto.observacao2}}</td>
+                <td>
+                    <a *ngIf="service.isPodeAvaliarPreProjeto(preProjeto.idAvaliador2, preProjeto)" class="btn btn-primary" [routerLink]="['/preprojeto/avaliacao', this.id, this.preProjeto.avaliador2.id, 'nav2']"> Avaliar </a>&nbsp;&nbsp;
+                    <a *ngIf="service.isPodeAvaliarPreProjeto(preProjeto.idAvaliador2, preProjeto)" class="btn btn-success" [routerLink]="['/preprojeto/avaliacao', this.id, this.preProjeto.avaliador2.id, 'nav4']"> Ficha de avaliação individual </a>
+                </td>
+                </tr>
+                <tr>
+                    <td><b>Média final</b></td>
+                    <td colspan="3"><b>{{this.preProjeto.notaFinal == null ? "-": this.preProjeto.notaFinal}}</b></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-form">
+            <a *ngIf="service.isPodeAvaliarPreProjeto(null, preProjeto)" class="btn btn-success" [routerLink]="['/preprojeto/avaliacao', this.id, 0, 'nav3']">Ficha de Avaliação Final </a>
+        </div>
+    </form>
+</div>
+
+<div style="display: none;" id="nav4">
+    <form [formGroup]="formularioGerador" novalidate>
+        <h3 class="text-center">Gerar Documentos</h3>
+        <div class="form-group">
+            <select formControlName="gerador" id="gerador" (change)="service.trocaDiv('gerador', formularioGerador.value.gerador)" class="form-control select-underline input-lg">
+                <option value="1">Carta de aceite de orientador</option>
+                <option value="2">Carta de aceite do coorientador</option>
+                <option value="3">Ficha de Inscrição no TCC</option>
+            </select>   
+        </div>
+        
+        <div style="display: none;" id="gerador1">
+            <div class="form-group">
+                Tema: {{this.preProjeto.tema}}
+            </div>
+            <div class="form-group">
+                Alunos: {{this.preProjeto.aluno1.nome}} {{this.preProjeto.aluno2 == null ? "" : " e " + this.preProjeto.aluno2.nome}}
+            </div>
+            <div class="form-group">
+                Orientador: {{this.preProjeto.orientador.nome}}
+                {{this.preProjeto.coOrientador == null ? "": " e " + this.preProjeto.coOrientador.nome}}
+            </div>
+            <div class="form-group">
+                Data da assinatura*: 
+                <input type="date" class="form-control input-underline input-lg"
+                formControlName="dataAssinatura" placeholder="Data da assinatura ">
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/cartaaceiteorientadorpreprojeto/')"> Gerar </button>&nbsp;&nbsp;
+                
+            </div>
+        </div>
+        <div style="display: none;" id="gerador2">
+            <div class="form-group">
+                Tema: {{this.preProjeto.tema}}
+            </div>
+            <div class="form-group">
+                Alunos: {{this.preProjeto.aluno1.nome}} {{this.preProjeto.aluno2 == null ? "" : " e " + this.preProjeto.aluno2.nome}}
+            </div>
+            <div class="form-group">
+                Orientadores: {{this.preProjeto.orientador.nome}}
+                {{this.preProjeto.coOrientador == null ? "": " e " + this.preProjeto.coOrientador.nome}}
+            </div>
+            <div class="form-group">
+                Data da assinatura*: <input type="date" class="form-control input-underline input-lg" 
+                id="dataAssinatura" formControlName="dataAssinatura" placeholder="Data da assinatura ">
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/cartaaceitecoorientadorpreprojeto/')"> Gerar </button>&nbsp;&nbsp;
+                
+            </div>
+        </div>
+        <div style="display: none;" id="gerador3">
+            <div class="form-group">
+                Aluno: {{this.preProjeto.aluno1.nome}}
+            </div>
+            <div class="form-group">
+                CPF, RG/Órgão expedidor*: 
+            </div>
+            <div class="form-group">
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="number" class="form-control input-underline input-lg" 
+                    formControlName="cpf" placeholder="Cpf">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    &nbsp;&nbsp;
+                </div>
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="number" max="2" formControlName="rg" class="form-control input-underline input-lg"
+                    placeholder="RG">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    /
+                </div>
+                <div style="padding-left: 10px; width: 100%; display: table-cell">
+                    <input type="text" formControlName="orgaoExpedidor" class="form-control input-underline input-lg"
+                    placeholder="Órgão Expedidor">
+                </div>
+            </div>
+            <div class="form-group">
+                Email*: <input type="text" class="form-control input-underline input-lg" 
+                formControlName="email" placeholder="E-mail">
+            </div>
+            <div class="form-group">
+                Telefone/Celular*: 
+            </div>
+            <div class="form-group">
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="number" max="2" formControlName="telefone" class="form-control input-underline input-lg"
+                    placeholder="Telefone">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    /
+                </div>
+                <div style="padding-left: 10px; width: 100%; display: table-cell">
+                    <input type="number" formControlName="celular" class="form-control input-underline input-lg"
+                    placeholder="Celular">
+                </div>
+            </div>
+            <div class="form-group">
+                Matrícula, Período, Número de disciplinas cursadas e aprovadas*: 
+            </div>
+            <div class="form-group">
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="text" class="form-control input-underline input-lg" 
+                formControlName="matricula" placeholder="Matrícula">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    &nbsp;&nbsp;
+                </div>
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="number" class="form-control input-underline input-lg" 
+                    formControlName="periodo" placeholder="Período">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    &nbsp;&nbsp;
+                </div>
+                <div style="padding-left: 10px; width: 100%; display: table-cell">
+                    <input type="number" class="form-control input-underline input-lg" 
+                    formControlName="numeroDisciplinasCursadasAprovadas" placeholder="Número de disciplinas cursadas e aprovadas">  
+                </div>
+            </div>
+            <div class="form-group">
+                Título*: <input type="text" class="form-control input-underline input-lg" 
+                formControlName="titulo" placeholder="Título">
+            </div>
+            <div class="form-group">
+                Orientador*: <input type="text" class="form-control input-underline input-lg" 
+                formControlName="orientador" placeholder="Orientador">
+            </div>
+            <div class="form-group">
+                Co-Orientador*: <input type="text" class="form-control input-underline input-lg" 
+                formControlName="coorientador" placeholder="Co-Orientador">
+            </div>
+            <div class="form-group">
+                Data*: <input type="date" class="form-control input-underline input-lg" 
+                formControlName="data" placeholder="Data">
+            </div>
+            <div class="form-group">
+                Aluno2: <input type="text" class="form-control input-underline input-lg" 
+                formControlName="aluno2" placeholder="Aluno2">
+            </div>
+            <div class="form-group">
+                CPF, RG/Órgão expedidor: 
+            </div>
+            <div class="form-group">
+                <div style="min-width: 150px; display: table-cell;">
+                <input type="number" class="form-control input-underline input-lg" 
+                formControlName="cpf2" placeholder="Cpf">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    &nbsp;&nbsp;
+                </div>
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="number" max="2" formControlName="rg2" class="form-control input-underline input-lg"
+                    placeholder="RG">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    /
+                </div>
+                <div style="padding-left: 10px; width: 100%; display: table-cell">
+                    <input type="text" formControlName="orgaoExpedidor2" class="form-control input-underline input-lg"
+                    placeholder="Órgão Expedidor">
+                </div>
+            </div>
+            <div class="form-group">
+                Email: <input type="text" class="form-control input-underline input-lg" 
+                formControlName="email2" placeholder="E-mail">
+            </div>
+            <div class="form-group">
+                Telefone/Celular: 
+            </div>
+            <div class="form-group">
+            <div style="min-width: 150px; display: table-cell;">
+                <input type="number" max="2" formControlName="telefone2" class="form-control input-underline input-lg"
+                placeholder="Telefone">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    /
+                </div>
+                <div style="padding-left: 10px; width: 100%; display: table-cell">
+                    <input type="number" formControlName="celular2" class="form-control input-underline input-lg"
+                    placeholder="Celular">
+                </div>
+            </div>
+            <div class="form-group">
+                Matrícula, Período, Número de disciplinas cursadas e aprovadas: 
+            </div>
+            <div class="form-group">
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="text" class="form-control input-underline input-lg" 
+                formControlName="matricula2" placeholder="Matrícula">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    &nbsp;&nbsp;
+                </div>
+                <div style="min-width: 150px; display: table-cell;">
+                    <input type="number" class="form-control input-underline input-lg" 
+                    formControlName="periodo2" placeholder="Período">
+                </div>
+                <div style="padding-left: 10px; display: table-cell;">
+                    &nbsp;&nbsp;
+                </div>
+                <div style="padding-left: 10px; width: 100%; display: table-cell">
+                    <input type="number" class="form-control input-underline input-lg" 
+                    formControlName="numeroDisciplinasCursadasAprovadas2" placeholder="Número de disciplinas cursadas e aprovadas">  
+                </div>
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/inscricaotcc/')"> Gerar </button>&nbsp;&nbsp;
+                <a class="btn btn-secondary" [routerLink]="['/tcc/acompanhar']"> Cancelar </a>
+            </div>   
+        </div>
+    </form>
+</div>
+<div id="loading" style="text-align: center; display: none">
+    <img id="loading-image" src="/assets/images/ajax-loader.gif" alt="Loading..." />
+</div>

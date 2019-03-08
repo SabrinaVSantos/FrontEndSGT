@@ -1,0 +1,52 @@
+<form [formGroup]="formulario" style="border: 0px">
+  <div style="width:100%; display: table; border: 10px">
+    <div style="padding-left: 10px; display: table-cell;">
+      <a *ngIf="!service.isAluno()" class="btn btn-success" [routerLink]="['/tcc/cadastrar']">
+        <i class ="fa fa-plus"> Novo </i>
+      </a>
+    </div>
+    <div style="padding-left: 10px; width: 100%; display: table-cell">
+      <input style="padding-top: 2px;" type="text" class="form-control" formControlName="tema" 
+      id="tma" placeholder="Pesquisar" (keydown.enter)="pesquisar()">
+    </div>
+    <div style="padding-left: 10px; min-width: 200px; word-break:break-all; display: table-cell">
+        <select style="padding-top: 2px;" formControlName="campo" id="campo"  class="form-control">
+            <option value="TEMA">por tema</option>
+            <option value="ALUNOS">por alunos</option>
+            <option value="ORIENTADORES">por orientadores</option>
+        </select>
+    </div>
+    <div style="padding-left: 10px; display: table-cell">
+        <button class="btn btn-success" (click)="pesquisar()"><i class ="fa fa-search"></i></button>
+    </div>
+    <div style="padding-left: 10px; display: table-cell">
+        <button class="btn btn-success" (click)="ngOnInit();"><i class ="fa fa-eraser"> Limpar </i></button>
+    </div>
+  </div>
+</form>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Tema</th>
+    <th>Alunos</th>
+    <th>Orientadores</th>
+    <th>Banca</th>
+    <th colspan="2">Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let tcc of tccs">
+    <td>{{tcc.tema}}</td>
+    <td>{{tcc.aluno1.nome}} {{tcc.aluno2 == null ? "" : " e " + tcc.aluno2.nome}}</td>
+    <td>{{tcc.orientador.nome}} {{tcc.coOrientador == null ? "" : " e " + tcc.coOrientador.nome}}</td>
+    <td>{{tcc.membroBanca1 == null ? "" : tcc.membroBanca1.nome}} {{tcc.membroBanca2 == null ? "" : " e " + tcc.membroBanca2.nome}}</td>
+    <td><button *ngIf="service.isPodeRemoverTCC(tcc)" class="btn btn-danger" (click)="deleteTCC(tcc)"> <i class ="fa fa-trash-alt"></i></button></td>
+    <td><a *ngIf="service.isPodeEditarTCC(tcc)" [routerLink]="['/tcc/editar', tcc.id, 1]" class="btn btn-primary"><i class="fa fa-edit"></i>
+      </a></td>
+    </tr>
+  </tbody>
+</table>
+
+<a *ngIf="service.isCoordenador()" class="btn btn-adicionar" [routerLink]="['/tcc/informesmatricula']">
+  Ficha de Informes de matrícula no TCC
+</a>

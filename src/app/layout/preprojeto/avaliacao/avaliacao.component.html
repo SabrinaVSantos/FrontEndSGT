@@ -1,0 +1,128 @@
+<div id="nav1" style="display: none;">
+    <form [formGroup]="formulario">  
+        <h3 class="text-center"> Avaliar pré-projeto </h3>
+        <div class="form-group">
+            Tema: {{this.preProjeto.tema}}
+        </div>
+        <div class="form-group">
+            Alunos: {{this.preProjeto.aluno1.nome}} {{this.preProjeto.aluno2 == null ? "" : " e " + this.preProjeto.aluno2.nome}}
+        </div>
+        <div class="form-group">
+            Avaliador: {{this.preProjeto.avaliador1.nome}}
+        </div>
+        <div class="form-group">
+            Nota: <input type="number" class="form-control input-underline input-lg" 
+            id="nota1" formControlName="nota1" placeholder="Nota">
+        </div>
+        <div class="form-group">
+            Observação: <textarea class="form-control input-underline input-lg" 
+            id="observacao1" formControlName="observacao1" placeholder="Observação"></textarea>
+        </div>
+        <div class="btn-form">
+            <button type="submit" class="btn btn-success" (click)="onCadastrar()"> Avaliar </button>&nbsp;&nbsp;
+            <a class="btn btn-secondary" [routerLink]="['/preprojeto/editar', this.id, 3]"> Cancelar </a>
+        </div>
+    </form>
+</div>
+<div id="nav2" style="display: none;">
+    <form [formGroup]="formulario">  
+        <h3 class="text-center"> Avaliar pré-projeto </h3>
+        <div class="form-group">
+            Tema: {{this.preProjeto.tema}}
+        </div>
+        <div class="form-group">
+            Alunos: {{this.preProjeto.aluno1.nome}} {{this.preProjeto.aluno2 == null ? "" : " e " + this.preProjeto.aluno2.nome}}
+        </div>
+        <div class="form-group">
+            Avaliador: {{this.preProjeto.avaliador2.nome}}
+        </div>
+        <div class="form-group">
+            Nota: <input type="number" class="form-control input-underline input-lg" 
+            id="nota2" formControlName="nota2" placeholder="Nota">
+        </div>
+        <div class="form-group">
+            Observação: <textarea class="form-control input-underline input-lg" 
+            id="observacao2" formControlName="observacao2" placeholder="Observação"></textarea>
+        </div>
+        <div class="btn-form">
+            <button type="submit" class="btn btn-success" (click)="onCadastrar()"> Avaliar </button>&nbsp;&nbsp;
+            <a class="btn btn-secondary" [routerLink]="['/preprojeto/editar', this.id, 3]"> Cancelar </a>
+        </div>
+    </form>
+</div>
+
+<div id="nav3" style="display: none;">
+    <form [formGroup]="formulario">   
+        <h3 class="text-center"> Ficha de avaliação final </h3> 
+        <div class="form-group">
+            Tema: {{this.preProjeto.tema}}
+        </div>
+        <div class="form-group">
+            Alunos: {{this.preProjeto.aluno1.nome}} {{this.preProjeto.aluno2 == null ? "" : " e " + this.preProjeto.aluno2.nome}}
+        </div>
+        <div class="form-group">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                <th>Avaliador</th>
+                <th>Nota</th>
+                <th>Observação</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>{{this.preProjeto.avaliador1 == null ? "-": this.preProjeto.avaliador1.nome}}</td>
+                <td>{{this.preProjeto.nota1 == null ? "-": this.preProjeto.nota1}}</td>
+                <td>{{this.preProjeto.observacao1 == null ? "-": this.preProjeto.observacao1}}</td>
+                </tr>
+                <tr>
+                <td>{{this.preProjeto.avaliador2 == null ? "-": this.preProjeto.avaliador2.nome}}</td>
+                <td>{{this.preProjeto.nota2 == null ? "-": this.preProjeto.nota2}}</td>
+                <td>{{this.preProjeto.observacao2 == null ? "-": this.preProjeto.observacao2}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            Aprovação*: <select formControlName="aprovado" 
+            class="form-control select-underline input-lg" placeholder="aprovado">
+                <option value="true">SIM</option>
+                <option value="false">NÃO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            Observação: <textarea class="form-control input-underline input-lg" 
+            formControlName="observacaoAprovacao" placeholder="Observação"></textarea>
+        </div>
+        <div class="btn-form">
+            <button class="btn btn-success" data-loading-text="Carregando..."  (click)="gerarRelatorioAvaliacaoFinal()">Gerar</button>&nbsp;&nbsp;
+            <a class="btn btn-secondary" [routerLink]="['/preprojeto/editar', this.id, 3]"> Cancelar </a>
+        </div>
+    </form>
+</div>
+
+<div id="nav4" style="display: none;">
+    <form [formGroup]="formularioGerador">    
+        <h3 class="text-center"> Ficha de avaliação individual </h3>
+        <div class="form-group">
+            Tema: {{this.preProjeto.tema}}
+        </div>
+        <div class="form-group">
+            Alunos: {{this.preProjeto.aluno1.nome}} {{this.preProjeto.aluno2 == null ? "" : " e " + this.preProjeto.aluno2.nome}}
+        </div>
+        <div class="form-group">
+            Avaliador: {{this.preProjeto.avaliador1.nome}}
+        </div>
+        <div class="form-group">
+            Data da assinatura*: <input type="date" class="form-control input-underline input-lg" 
+            id="dataAssinatura" formControlName="dataAssinatura" placeholder="Data da assinatura">
+        </div>
+        <div class="btn-form">
+            <button type="submit" class="btn btn-success" (click)="gerarRelatorioAvaliacaoIndividual()"> Gerar</button>&nbsp;&nbsp;
+            <a class="btn btn-secondary" [routerLink]="['/preprojeto/editar', this.id, 3]"> Cancelar </a>
+        </div>
+    </form>
+</div>
+<div id="loading" style="text-align: center; display: none">
+    <img id="loading-image" src="/assets/images/ajax-loader.gif" alt="Loading..." />
+</div>

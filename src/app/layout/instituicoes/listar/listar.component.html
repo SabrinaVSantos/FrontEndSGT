@@ -1,0 +1,35 @@
+<form [formGroup]="formulario" style="border: 0px">
+  <div style="width:100%; display: table">
+    <div style="padding-left: 10px; display: table-cell;">
+      <a *ngIf="service.isCoordenador()" class="btn btn-success" [routerLink]="['/instituicoes/cadastrar']">
+        <i class ="fa fa-plus"> Novo </i>
+      </a>
+    </div>
+    <div style="padding-left: 10px; width:100%; display: table-cell">
+      <input style="padding-top: 2px;" type="text" class="form-control" formControlName="nome" 
+      id="nome" placeholder="Pesquisar por nome" (keydown.enter)="pesquisar()">
+    </div>
+    <div style="padding-left: 10px; display: table-cell">
+        <button class="btn btn-success" (click)="pesquisar()"><i class ="fa fa-search"></i></button>
+    </div>
+    <div style="padding-left: 10px; display: table-cell">
+        <button class="btn btn-success" (click)="ngOnInit();"><i class ="fa fa-eraser"> Limpar </i></button>
+    </div>
+  </div>
+</form>
+<table class="table table-striped" width="100%">
+  <thead>
+  <tr class="text-center">
+    <th>Nome</th>
+    <th>Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="text-center" *ngFor="let instituicao of instituicoes">
+    <td>{{instituicao.nome}}</td>
+    <td><button *ngIf="service.isCoordenador()" class="btn btn-danger" (click)="deleteInstituicao(instituicao)"> <i class ="fa fa-trash-alt"></i></button>&nbsp;
+    <a *ngIf="service.isCoordenador()" [routerLink]="['/instituicoes/editar', instituicao.id]" class="btn btn-primary"><i class ="fa fa-edit"></i></a></td>
+  </tr>
+  </tbody>
+</table>
+

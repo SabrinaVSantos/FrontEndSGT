@@ -1,0 +1,42 @@
+<form [formGroup]="formulario" style="border: 0px">
+    <div style="width:100%; display: table">
+      <div style="padding-left: 15px; display: table-cell;">
+        <a *ngIf="service.isCoordenador()" class="btn btn-success" [routerLink]="['/professores/cadastrar']">
+          <i class ="fa fa-plus"> Novo </i>
+        </a>
+      </div>
+      <div style="padding-left: 10px; width:100%; display: table-cell">
+        <input style="padding-top: 3px;" type="text" class="form-control" formControlName="nome" 
+        id="nome" placeholder="Pesquisar por nome" (keydown.enter)="pesquisar()">
+      </div>
+      <div style="padding-left: 10px; display: table-cell">
+          <button class="btn btn-success" (click)="pesquisar()"><i class ="fa fa-search"></i></button>
+      </div>
+      <div style="padding-left: 10px; display: table-cell">
+          <button class="btn btn-success" (click)="ngOnInit();"><i class ="fa fa-eraser"> Limpar </i></button>
+      </div>
+    </div>
+  </form>
+  <table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Nome</th>
+    <th>lattes</th>
+    <th>Email</th>
+    <th>Area de Pesquisa</th>
+    <th>NDE</th>
+    <th colspan="2" class="text-center">Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let professor of professores">
+    <td>{{professor.nome}}</td>
+    <td min-width="400px" class="dont-break-out">{{professor.lattes}}</td>
+    <td>{{professor.email}}</td>
+    <td>{{professor.areaPesquisa}}</td>
+    <td>{{professor.nde ? 'Sim': 'Não'}}</td>
+    <td><button *ngIf="service.isPodeEditarProfessor(professor)" class="btn btn-danger" (click)="deleteProfessor(professor)"> <i class ="fa fa-trash-alt"></i></button></td>
+    <td><a *ngIf="service.isPodeEditarProfessor(professor)" [routerLink]="['/professores/editar', professor.id]" class="btn btn-primary"><i class ="fa fa-edit"></i></a></td>
+  </tr>
+  </tbody>
+</table>

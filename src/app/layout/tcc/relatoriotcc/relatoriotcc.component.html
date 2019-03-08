@@ -1,0 +1,25 @@
+<form [formGroup]="formulario">
+    <h3 class="text-center"> Adicionar orientação </h3>
+    <div class="form-group">
+        Tema: {{tcc.tema}}
+    </div>
+    <div class="form-group">
+        Alunos: {{tcc.aluno1.nome}} {{tcc.aluno2 == null ? "" : " e " + tcc.aluno2.nome}}
+    </div>
+    <div class="form-group">
+        Orientadores: {{tcc.orientador.nome}} {{tcc.coOrientador == null ? "" : " e " + tcc.coOrientador.nome}}
+    </div>
+    <div class="form-group">
+        Data*: <input type="date" class="form-control input-underline input-lg" 
+        id="dataFormatada" formControlName="dataFormatada" placeholder="Data">
+    </div>
+    <div class="form-group">
+        Orientação*: <textarea formControlName="orientacao" 
+        class="form-control input-underline input-lg" 
+        id="orientacao">orientação</textarea>
+    </div>  
+    <div class="btn-form">
+        <button type="submit" class="btn btn-success" (click)="onCadastrar()"> Adicionar </button>&nbsp;&nbsp;
+        <a class="btn btn-secondary" [routerLink]="['/tcc/editar', this.id, 2]"> Cancelar </a>
+    </div>
+</form>

@@ -1,0 +1,63 @@
+<div [@routerTransition]>
+    <a class="navbar-brand" href="#">Página Inicial</a>
+    <button class="navbar-toggler" type="button" (click)="toggleSidebar()">    
+        </button>
+
+       <div class= "documentação">
+           <h3></h3>
+            <a href="http://ifg.edu.br/luziania">
+            </a>
+        </div> 
+        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ngb-carousel>
+                <ng-template ngbSlide *ngFor="let slider of sliders">
+                    <img class="img-fluid mx-auto d-block" style="width: 700px; height:200px;" [src]="slider.imagePath" alt="Random first slide" width="100%">
+                    <div class="carousel-caption">
+                        <h3>{{slider.label}}</h3>
+                        <p>{{slider.text}}</p>
+                    </div>
+                </ng-template>
+            </ngb-carousel> 
+      <!--  <div>
+            <img src="assets/images/Processo.png" width="800px" style="border-radius: 1%;" class="user-avatar" />&nbsp;
+            <a href="http://ifg.edu.br/luziania">
+            </a>
+        </div> -->
+        </div>
+    </div>
+<br>
+
+
+<hr/>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card card-default">
+            <div class="card-header">
+                    <i class="fas fa-graduation-cap"></i> FLUXO DO PROCESSO DE TCC
+            </div>
+            <!-- /.card-header -->
+            <app-timeline></app-timeline>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col-lg-8 -->
+    <p></p>
+    <div class="col-lg-4">
+        <div class="card card-default mb-3">
+            <div class="card-header">
+                    <i class="fas fa-graduation-cap"></i> SOBRE O TCC 
+            </div>
+            <!-- /.card-header -->
+            <app-notification></app-notification>
+            <!-- /.card-body -->
+        </div>
+  
+    </div>
+    <!-- /.col-lg-4 -->
+</div>
+</div>
+

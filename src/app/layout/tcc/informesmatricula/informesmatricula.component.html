@@ -1,0 +1,40 @@
+<form [formGroup]="formulario">
+    <h3 class="text-center"> Ficha de Informes de matrícula no TCC</h3>
+    <div class="form-group">
+        Semestre/Ano*: 
+    </div>
+    <div class="form-group">
+        <div style="min-width: 150px; display: table-cell;">
+            <input type="number" max="2" formControlName="semestre" class="form-control input-underline input-lg"
+            placeholder="Semestre">
+        </div>
+        <div style="padding-left: 10px; display: table-cell;">
+            /
+        </div>
+        <div style="padding-left: 10px; width: 100%; display: table-cell">
+            <input type="number" formControlName="ano" class="form-control input-underline input-lg"
+            placeholder="Ano">
+        </div>
+    </div>
+    <div class="form-group">
+        Professor 1*: <input type="text" class="form-control input-underline input-lg" 
+        formControlName="professor" placeholder="Professor 1">
+    </div>
+    <div class="form-group">
+        Professor 2*: <input type="text" class="form-control input-underline input-lg" 
+        formControlName="professor2" placeholder="Professor 2">
+    </div>
+    <div class="form-group">
+        Data*: <input type="date" class="form-control input-underline input-lg" 
+        formControlName="data" placeholder="Data">
+    </div>
+    <div class="form-group">
+        Coordenador*: <input type="text" class="form-control input-underline input-lg" 
+        formControlName="coordenador" placeholder="Coordenador">
+    </div>
+   
+     <div class="btn-form">
+        <button type="submit" class="btn btn-success" (click)="this.service.downloadArquivo('gerador/informematricula', this.formulario.value)"> Gerar </button>&nbsp;&nbsp;
+        <a class="btn btn-secondary" [routerLink]="['/tcc/acompanhar']"> Cancelar </a>
+    </div>
+</form>

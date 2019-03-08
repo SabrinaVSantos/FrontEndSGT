@@ -1,0 +1,382 @@
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" id="navtab1" (click)="trocaDiv('nav', 1)">
+            DADOS GERAIS
+        </a>
+    </li> 
+    <li class="nav-item">
+        <a class="nav-link" id="navtab2" (click)="trocaDiv('nav', 2)">
+            ORIENTAÇÕES
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navtab3" (click)="trocaDiv('nav', 3)">
+            BANCA
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navtab4" (click)="trocaDiv('nav', 4)">
+            GERAR DOCUMENTOS
+        </a>
+    </li>
+</ul>
+    
+<div id="nav1">
+    <form [formGroup]="formulario">
+        <h3 class="text-center">Dados Gerais </h3>
+        <div class="form-group">
+            Tema*: <input type="text" formControlName="tema" class="form-control input-underline input-lg" 
+            id="tema" placeholder="Tema">
+        </div>
+        <div class="form-group">
+            Aluno*: <select formControlName="idAluno1" ng-model="name" 
+            class="form-control select-underline input-lg" id="aluno1" placeholder="Aluno">
+                <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                    {{aluno.nome}}
+                </option>
+            </select>  
+        </div>
+        <div class="form-group">
+            Aluno em dupla: <select formControlName="idAluno2" ng-model="name" 
+            class="form-control select-underline input-lg" id="aluno2" placeholder="Aluno em dupla">
+                <option value=""> </option>
+                <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                    {{aluno.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            Orientador*: <select formControlName="idOrientador" ng-model="name" 
+            class="form-control select-underline input-lg" id="orientador" placeholder="Orientador">
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            Co-orientador: <select formControlName="idCoOrientador" ng-model="name" 
+            class="form-control select-underline input-lg" id="coOrientador" placeholder="coOrientador">
+                <option value=""> </option>
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            Membro da banca 1: <select formControlName="idMembroBanca1" ng-model="name" 
+            class="form-control select-underline input-lg" id="idMembroBanca1" placeholder="Membro da banca 1">
+                <option value=""> </option>
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            Membro da banca 2: <select formControlName="idMembroBanca2" ng-model="name" 
+            class="form-control select-underline input-lg" id="idMembroBanca2" placeholder="Membro da banca 2">
+                <option value=""> </option>
+                <option *ngFor="let professor of professores" [value]="professor.id">
+                    {{professor.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            Nota TCCI: <input type="number" class="form-control input-underline input-lg" 
+            id="nota1" formControlName="nota1" placeholder="Nota TCCI">
+        </div>
+        <div class="form-group">
+            Nota TCCII: <input type="number" class="form-control input-underline input-lg" 
+            id="nota2" formControlName="nota2" placeholder="Nota TCCII">
+        </div>
+        <div class="btn-form">
+            <button *ngIf="!service.isAluno()" type="submit" class="btn btn-success" (click)="onCadastrar()"> Atualizar </button>&nbsp;&nbsp;
+            <a *ngIf="!service.isAluno()" class="btn btn-secondary" [routerLink]="['/tcc/acompanhar']"> Cancelar </a>
+        </div>
+    </form>
+</div>
+
+<div style="display: none;" id="nav2">
+    <form [formGroup]="formulario">
+        <h3 class="text-center">Orientações </h3>
+       
+        <div class="btn-adicionar">
+            <a class="btn btn-success"  *ngIf="service.isPodeOrientarTCC(tcc)" [routerLink]="['/tcc/relatoriotcc', tcc.id,0]"> Adicionar orientação </a>
+        </div>
+        &nbsp;
+        <div class="form-group">    
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                <th>Data</th>
+                <th >Descrição</th>
+                <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let orientacao of tcc.orientacoes">
+                <td>{{orientacao.dataFormatada}}</td>
+                <td>{{orientacao.orientacao}}</td>
+                <td>
+                    <button *ngIf="service.isPodeOrientarTCC(tcc)" class="btn btn-danger" (click)="deleteOrientacao(orientacao)">
+                        <i class ="fa fa-trash-alt"></i>
+                    </button> &nbsp;&nbsp;
+                    <a class="btn btn-primary"  *ngIf="service.isPodeOrientarTCC(tcc)" [routerLink]="['/tcc/relatoriotcc', tcc.id, orientacao.id]">
+                        <i class ="fa fa-edit"></i>
+                    </a>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-adicionar" *ngIf="tcc.orientacoes.length > 0">
+            <button type="submit" class="btn btn-success" (click)="this.service.downloadArquivo('gerador/registroencontroorientacaotcc/' + this.id, null)"> Gerar Relatório</button>
+        </div>
+    </form>
+</div>
+
+<div style="display: none;" id="nav3">
+    <form [formGroup]="formulario">
+        <div id="ficha1">
+            <h3 class="text-center"> Banca </h3>
+            <div class="form-group">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                    <th>Avaliador</th>
+                    <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>  
+                    <td>{{this.tcc.orientador == null ? "-": this.tcc.orientador.nome}}</td>
+                    <td>
+                        <button *ngIf="!service.isAluno()" class="btn btn-success" (click)="abreFicha('ficha', 2, this.tcc.idOrientador)">Ficha de Avaliação Individual </button>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>{{this.tcc.coOrientador == null ? "-": this.tcc.coOrientador.nome}}</td>
+                    <td>
+                        <button type="submit" *ngIf="!service.isAluno()" class="btn btn-success" (click)="abreFicha('ficha', 2, this.tcc.idCoOrientador)">Ficha de Avaliação Individual </button>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>{{this.tcc.membroBanca1 == null ? "-": this.tcc.membroBanca1.nome}}</td>
+                    <td>
+                        <button type="submit" *ngIf="!service.isAluno()" class="btn btn-success" (click)="abreFicha('ficha', 2, this.tcc.idMembroBanca1)">Ficha de Avaliação Individual </button>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>{{this.tcc.membroBanca2 == null ? "-": this.tcc.membroBanca2.nome}}</td>
+                    <td>
+                        <button type="submit" *ngIf="!service.isAluno()" class="btn btn-success" (click)="abreFicha('ficha', 2, this.tcc.idMembroBanca2)">Ficha de Avaliação Individual </button>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="btn-form">
+                <button type="submit" *ngIf="!service.isAluno()" class="btn btn-success" (click)="abreFicha('ficha', 3, null)">Ficha de Avaliação Final </button>
+            </div>
+        </div>
+        <div style="display: none;" id="ficha2">
+            <form [formGroup]="formularioAvaliacao">
+                <h3 class="text-center">FICHA DE AVALIAÇÃO INDIVIDUAL</h3>
+                <div class="form-group">
+                    Tema: {{this.tcc.tema}}
+                </div>
+                <div class="form-group">
+                    Alunos: {{this.tcc.aluno1.nome}} {{this.tcc.aluno2 == null ? "" : " e " + this.tcc.aluno2.nome}}
+                </div>
+                <div class="form-group">
+                    Orientadores: {{this.tcc.orientador.nome}}
+                    {{this.tcc.coOrientador == null ? "": " e " + this.tcc.coOrientador.nome}}
+                </div>
+                <div class="form-group">
+                    Data da assinatura*: <input type="date" class="form-control input-underline input-lg" 
+                    id="dataAssinatura" formControlName="dataAssinatura" placeholder="Data da assinatura ">
+                </div>
+                <div class="btn-form">
+                    <button type="submit" class="btn btn-success" (click)="gerarFicha('gerador/avaliacaoindividualtcc/', this.formularioAvaliacao)"> Gerar </button>&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="service.trocaDiv('ficha', 1)"> Cancelar </button>&nbsp;&nbsp;
+                    
+                </div>
+            </form> 
+        </div>
+        <div style="display: none;" id="ficha3">
+            <form [formGroup]="formularioAvaliacaoFinal">
+                <h3 class="text-center">FICHA DE AVALIAÇÃO FINAL</h3>
+                <div class="form-group">
+                    Tema: {{this.tcc.tema}}
+                </div>
+                <div class="form-group">
+                    Alunos: {{this.tcc.aluno1.nome}} {{this.tcc.aluno2 == null ? "" : " e " + this.tcc.aluno2.nome}}
+                </div>
+                <div class="form-group">
+                    Orientadores: {{this.tcc.orientador.nome}}
+                    {{this.tcc.coOrientador == null ? "": " e " + this.tcc.coOrientador.nome}}
+                </div>  
+                <div class="form-group">
+                    Data da assinatura*: <input type="date" class="form-control input-underline input-lg" 
+                    id="dataAssinatura" formControlName="dataAssinatura" placeholder="Data da assinatura ">
+                </div>
+                <div class="btn-form">
+                    <button type="submit" class="btn btn-success" (click)="gerarFicha('gerador/avaliacaofinaltcc/', this.formularioAvaliacaoFinal)"> Gerar </button>&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="service.trocaDiv('ficha', 1)"> Cancelar </button>&nbsp;&nbsp;
+                    
+                </div>
+            </form>
+        </div>
+    </form>
+</div>
+    
+<div style="display: none;" id="nav4">
+    <form [formGroup]="formularioGerador">
+        <h3 class="text-center">Gerar Documentos </h3>
+        <div class="form-group">
+            <select formControlName="gerador" id="gerador" (change)="service.trocaDiv('gerador', formularioGerador.value.gerador)" class="form-control select-underline input-lg">
+                <option value="1" *ngIf="!service.isAluno()">Ata de defesa pública</option>
+                <option value="2">Capa CD</option>
+                <option value="3">Capa TCC</option>
+                <option value="4" *ngIf="!service.isAluno()">Declaração de correção do orientador</option>
+                <option value="5">Autorização para disponibilização do TCC</option>
+                <option value="6" *ngIf="!service.isAluno()">Pedido de defesa</option>
+            </select>   
+        </div>
+        <div class="form-group">
+            Tema: {{this.tcc.tema}}
+        </div>
+        <div class="form-group">
+            Alunos: {{this.tcc.aluno1.nome}} {{this.tcc.aluno2 == null ? "" : " e " + this.tcc.aluno2.nome}}
+        </div>
+        <div class="form-group">
+            Orientadores: {{this.tcc.orientador.nome}}
+            {{this.tcc.coOrientador == null ? "": " e " + this.tcc.coOrientador.nome}}
+        </div>
+        
+        <div style="display: none;" id="gerador1">
+            <div class="form-group">
+                Data da defesa*: <input type="date" class="form-control input-underline input-lg" 
+                id="dataDefesa" formControlName="dataDefesa" placeholder="Data da defesa ">
+            </div>
+            <div class="form-group">
+                Hora*: <input type="time" class="form-control input-underline input-lg" 
+                id="horaDefesa" formControlName="horaDefesa" placeholder="Hora">
+            </div>
+            <div class="form-group">
+                Sala*: <input type="text" class="form-control input-underline input-lg" 
+                id="salaDefesa" formControlName="salaDefesa" placeholder="Sala">
+            </div>
+            <div class="form-group">
+                Ressalva*: <input type="text" class="form-control input-underline input-lg" 
+                id="ressalva" formControlName="ressalva" placeholder="Ressalva">
+            </div>
+            <div class="form-group">
+                Aprovação*: <select formControlName="aprovacaoReprovacao" id="aprovacaoReprovacao" class="form-control select-underline input-lg">
+                    <option value="aprovação">Aprovado</option>
+                    <option value="reprovação">Reprovado</option>
+                </select>
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/atadefesapublicatcc/')"> Gerar </button>&nbsp;&nbsp;
+                
+            </div>
+        </div>
+        <div style="display: none;" id="gerador2">
+            <div class="form-group">
+                Ano da defesa*: <input type="number" class="form-control input-underline input-lg" 
+                id="anoDefesa" formControlName="anoDefesa" placeholder="Ano da defesa">
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/capacdtcc/')"> Gerar </button>&nbsp;&nbsp;
+                
+            </div> 
+        </div>
+        <div style="display: none;" id="gerador3">
+            <div class="form-group">
+                Ano da defesa*: <input type="number" class="form-control input-underline input-lg" 
+                id="anoDefesa" formControlName="anoDefesa" placeholder="Ano da defesa">
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/capatcc/')"> Gerar </button>&nbsp;&nbsp;
+                
+            </div> 
+        </div>
+        <div style="display: none;" id="gerador4">
+            <div class="form-group">
+                Data da defesa*: <input type="date" class="form-control input-underline input-lg" 
+                id="dataDefesa" formControlName="dataDefesa" placeholder="Data da defesa ">
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/declaracaoorientadorcorrecaotcc/')"> Gerar </button>&nbsp;&nbsp;
+                
+            </div>       
+        </div>
+        <div style="display: none;" id="gerador5">
+            <div class="form-group">
+                RG*: <input type="number" class="form-control input-underline input-lg" 
+                id="rg" formControlName="rg" placeholder="RG">
+            </div>
+            <div class="form-group">
+                Órgão Expedidor*: <input type="text" class="form-control input-underline input-lg" 
+                id="orgaoExpedidor" formControlName="orgaoExpedidor" placeholder="Órgão Expedidor">
+            </div>
+            <div class="form-group">
+                CPF*: <input type="number" class="form-control input-underline input-lg" 
+                id="cpf" formControlName="cpf" placeholder="CPF">
+            </div>
+            <div class="form-group">
+                Rua*: <input type="text" class="form-control input-underline input-lg" 
+                id="rua" formControlName="rua" placeholder="Rua">
+            </div>
+            <div class="form-group">
+                Bairro*: <input type="text" class="form-control input-underline input-lg" 
+                id="bairro" formControlName="bairro" placeholder="Bairro">
+            </div>   
+            <div class="form-group">
+                Cidade*: <input type="text" class="form-control input-underline input-lg" 
+                id="cidade" formControlName="cidade" placeholder="Cidade">
+            </div> 
+            <div class="form-group">
+                Data da defesa*: <input type="date" class="form-control input-underline input-lg" 
+                id="dataDefesa" formControlName="dataDefesa" placeholder="Data da defesa ">
+            </div>
+            <div class="form-group">
+                Data da assinatura*: <input type="date" class="form-control input-underline input-lg" 
+                id="dataAssinatura" formControlName="dataAssinatura" placeholder="Data da assinatura ">
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/disponibilizartcc/')"> Gerar </button>&nbsp;&nbsp;
+                
+            </div>       
+        </div>
+        <div style="display: none;" id="gerador6">
+            <div class="form-group">
+                Data da defesa*: <input type="date" class="form-control input-underline input-lg" 
+                id="dataDefesa" formControlName="dataDefesa" placeholder="Data da defesa ">
+            </div>
+            <div class="form-group">
+                Hora*: <input type="time" class="form-control input-underline input-lg" 
+                id="horaDefesa" formControlName="horaDefesa" placeholder="Hora">
+            </div>
+            <div class="form-group">
+                Local*: <input type="text" class="form-control input-underline input-lg" 
+                id="localDefesa" formControlName="localDefesa" placeholder="Local">
+            </div>
+            <div class="form-group">
+                Professor suplente*: <input type="text" class="form-control input-underline input-lg" 
+                id="suplente" formControlName="suplente" placeholder="Professor suplente">
+            </div>
+            <div class="form-group">
+                Data da assinatura*: <input type="date" class="form-control input-underline input-lg" 
+                id="dataAssinatura" formControlName="dataAssinatura" placeholder="Data da assinatura ">
+            </div>
+            <div class="btn-form">
+                <button type="submit" class="btn btn-success" (click)="gerarDocumento('/gerador/pedidodefesatcc/')"> Gerar </button>&nbsp;&nbsp;
+                <button type="submit" class="btn btn-secondary" (click)="service.trocaDiv('nav', 3)"> Cancelar </button>&nbsp;&nbsp;
+            </div> 
+        </div>
+        <div id="loading" style="text-align: center; display:none">
+            <img id="loading-image" src="/assets/images/ajax-loader.gif" alt="Loading..." />
+        </div>
+    </form>
+</div>

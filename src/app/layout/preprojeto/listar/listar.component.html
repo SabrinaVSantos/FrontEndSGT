@@ -1,0 +1,47 @@
+<form [formGroup]="formulario" style="border: 0px">
+  <div style="width:100%; display: table">
+    <div style="padding-left: 10px; display: table-cell;">
+      <a *ngIf="service.isCoordenador()" class="btn btn-success" [routerLink]="['/preprojeto/submissao']">
+        <i class ="fa fa-plus"> Novo </i>
+      </a>
+    </div>
+    <div style="padding-left: 10px; width: 100%; display: table-cell">
+      <input style="padding-top: 2px;" type="text" class="form-control" formControlName="tema" 
+      id="tma" placeholder="Pesquisar" (keydown.enter)="pesquisar()">
+    </div>
+    <div style="padding-left: 10px; min-width: 200px; word-break:break-all; display: table-cell">
+        <select style="padding-top: 2px;" formControlName="campo" id="campo" class="form-control">
+            <option value="TEMA">por tema</option>
+            <option value="ALUNOS">por alunos</option>
+            <option value="ORIENTADORES">por orientadores</option>
+        </select>
+    </div>
+    <div style="padding-left: 10px; display: table-cell">
+        <button class="btn btn-success" (click)="pesquisar()"><i class ="fa fa-search"></i></button>
+    </div>
+    <div style="padding-left: 10px; display: table-cell">
+        <button class="btn btn-success" (click)="ngOnInit();"><i class ="fa fa-eraser"> Limpar </i></button>
+    </div>
+  </div>
+</form>
+  <table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Tema</th>
+    <th>Alunos</th>
+    <th>Orientadores</th>
+    <th>Avaliadores</th>
+    <th colspan="2">Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let preProjeto of preProjetos">
+    <td>{{preProjeto.tema}}</td>
+    <td>{{preProjeto.aluno1.nome}} {{preProjeto.aluno2 == null ? "" : " e " + preProjeto.aluno2.nome}}</td>
+    <td>{{preProjeto.orientador.nome}} {{preProjeto.coOrientador == null ? "" : " e " + preProjeto.coOrientador.nome}}</td>
+    <td>{{preProjeto.avaliador1 == null ? "" : preProjeto.avaliador1.nome}} {{preProjeto.avaliador2 == null ? "" : " e " + preProjeto.avaliador2.nome}}</td>
+    <td><button *ngIf="service.isCoordenador()" class="btn btn-danger" (click)="deletePreProjeto(preProjeto)"><i class ="fa fa-trash-alt"></i></button></td>
+    <td><a *ngIf="service.isPodeEditarPreProjeto(preProjeto)" [routerLink]="['/preprojeto/editar', preProjeto.id, 1]" class="btn btn-primary"><i class ="fa fa-edit"></i></a></td>
+  </tr>
+  </tbody>
+</table>
